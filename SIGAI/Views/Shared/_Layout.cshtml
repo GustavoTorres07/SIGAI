@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SIGAI</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link href="~/css/dashboard.css" rel="stylesheet" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar Mejorada -->
+        <div class="sidebar bg-primary text-white" id="sidebar">
+            <div class="sidebar-header d-flex justify-content-between align-items-center p-3">
+                <a href="/" class="d-flex align-items-center text-white text-decoration-none">
+                    <i class="bi bi-building fs-4 me-2"></i>
+                    <span class="fs-4 sidebar-logo-text">SIGAI</span>
+                </a>
+                <button class="btn btn-sm btn-outline-light sidebar-toggle" id="sidebarToggle">
+                    <i class="bi bi-chevron-double-left"></i>
+                </button>
+            </div>
+
+            <hr class="bg-white-50 my-1 mx-3">
+
+            <div class="user-profile p-3 text-center">
+                <img src="https://via.placeholder.com/80" alt="Usuario" class="rounded-circle border border-3 border-white mb-2" width="80">
+                <h6 class="mb-0">SuperAdmin</h6>
+                <small class="text-white-50">
+                    <i class="bi bi-shield-check"></i> Administrador del Sistema
+                </small>
+            </div>
+
+            <hr class="bg-white-50 my-1 mx-3">
+
+            <ul class="nav nav-pills flex-column mb-auto px-2">
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "DashboardSuperAdmin")" class="nav-link active">
+                        <i class="bi bi-speedometer2 me-3"></i>
+                        <span class="sidebar-link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-people me-3"></i>
+                        <span class="sidebar-link-text">Gestión de Usuarios</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-book me-3"></i>
+                        <span class="sidebar-link-text">Cursos Académicos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-calendar-event me-3"></i>
+                        <span class="sidebar-link-text">Calendario</span>
+                        <span class="badge bg-danger rounded-pill float-end">3</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-ticket-detailed me-3"></i>
+                        <span class="sidebar-link-text">Tickets</span>
+                        <span class="badge bg-warning rounded-pill float-end">5</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-white dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-gear me-3"></i>
+                        <span class="sidebar-link-text">Configuración</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-sliders me-2"></i> Ajustes Generales</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-building me-2"></i> Instituciones</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock me-2"></i> Permisos</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer p-3 mt-auto">
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                        <img src="https://via.placeholder.com/40" alt="Usuario" width="32" height="32" class="rounded-circle me-2">
+                        <span class="sidebar-link-text">Mi Cuenta</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content" id="mainContent">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- FullCalendar -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        // Toggle sidebar collapse
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('mainContent').classList.toggle('expanded');
+            localStorage.setItem('sidebarCollapsed', document.getElementById('sidebar').classList.contains('collapsed'));
+        });
+
+        // Check for saved preference
+        if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            document.getElementById('sidebar').classList.add('collapsed');
+            document.getElementById('mainContent').classList.add('expanded');
+        }
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Highlight active menu item
+        var currentPath = window.location.pathname;
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+                link.classList.remove('text-white');
+            } else {
+                link.classList.remove('active');
+                link.classList.add('text-white');
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

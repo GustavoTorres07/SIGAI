@@ -1,0 +1,605 @@
+﻿@{
+   
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAI - Sistema Integral de Gestión Académica e Institucional</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/publico.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#inicio">
+                <div class="logo-container me-3">
+                    <i class="bi bi-mortarboard-fill text-primary fs-2"></i>
+                    <span class="logo-text">SIGAI</span>
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">
+                            <i class="bi bi-house-fill me-1"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#acerca">
+                            <i class="bi bi-mortarboard me-1"></i> Acerca de SIGAI
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#modulos">
+                            <i class="bi bi-grid-3x3-gap-fill me-1"></i> Módulos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#funcionalidades">
+                            <i class="bi bi-gear-fill me-1"></i> Funcionalidades
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">
+                            <i class="bi bi-envelope-fill me-1"></i> Contacto
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="d-flex">
+                    <!-- Botón Campus Estudiante (actualizado) -->
+                    <a asp-controller="Auth" asp-action="Login" class="btn btn-outline-primary me-2">
+                        <i class="bi bi-backpack me-1"></i> Campus Estudiante
+                    </a>
+
+                    <!-- Botón Ingresar al Sistema (se mantiene igual) -->
+                    <a asp-controller="Auth" asp-action="Login" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Ingresar al Sistema
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Alert Placeholder -->
+    <div id="alertPlaceholder" class="position-fixed top-0 end-0 p-3" style="z-index: 1100"></div>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="display-1 fw-bold mb-3">SIGAI</h1>
+
+                        <h1 class="hero-title">
+                            Sistema Integral de Gestión
+                            <span class="text-white">Académica e Institucional</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            SIGAI es la solución completa para la gestión académica universitaria.
+                            Diseñado para universidades modernas que buscan eficiencia, control y escalabilidad.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#acerca" class="btn btn-primary btn-lg me-3">
+                                <i class="bi bi-play-circle me-2"></i>
+                                Conocer Más
+                            </a>
+                            <a href="#contacto" class="btn btn-outline-primary btn-lg">
+                                <i class="bi bi-telephone me-2"></i>
+                                Solicitar Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <div class="floating-cards">
+                            <div class="floating-card card-1">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Gestión de Estudiantes</span>
+                                <small>Control completo del ciclo estudiantil</small>
+                            </div>
+                            <div class="floating-card card-2">
+                                <i class="bi bi-calendar-check"></i>
+                                <span>Planificación Académica</span>
+                                <small>Horarios y calendarios inteligentes</small>
+                            </div>
+                            <div class="floating-card card-3">
+                                <i class="bi bi-graph-up"></i>
+                                <span>Reportes Inteligentes</span>
+                                <small>Análisis de datos en tiempo real</small>
+                            </div>
+                            <div class="floating-card card-4">
+                                <i class="bi bi-cash-coin"></i>
+                                <span>Gestión Financiera</span>
+                                <small>Control de pagos y becas</small>
+                            </div>
+                            <div class="floating-card card-5">
+                                <i class="bi bi-book"></i>
+                                <span>Aula Virtual</span>
+                                <small>Plataforma de aprendizaje integrada</small>
+                            </div>
+                            <div class="floating-card card-6">
+                                <i class="bi bi-person-badge"></i>
+                                <span>Gestión Docente</span>
+                                <small>Administración del cuerpo docente</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="acerca" class="about-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <h2 class="section-title">¿Qué es SIGAI?</h2>
+                        <p class="section-subtitle">
+                            SIGAI es un sistema integral diseñado específicamente para instituciones educativas
+                            que buscan optimizar sus procesos académicos y administrativos mediante tecnología de vanguardia.
+                        </p>
+
+                        <div class="about-features">
+                            <div class="about-feature">
+                                <div class="feature-number">01</div>
+                                <div class="feature-content">
+                                    <h5>Gestión Completa</h5>
+                                    <p>Administra todos los aspectos académicos desde inscripciones hasta titulaciones en una sola plataforma.</p>
+                                </div>
+                            </div>
+
+                            <div class="about-feature">
+                                <div class="feature-number">02</div>
+                                <div class="feature-content">
+                                    <h5>Escalabilidad Total</h5>
+                                    <p>Crece con tu institución, desde 100 hasta 100,000 estudiantes sin perder rendimiento.</p>
+                                </div>
+                            </div>
+
+                            <div class="about-feature">
+                                <div class="feature-number">03</div>
+                                <div class="feature-content">
+                                    <h5>Automatización Inteligente</h5>
+                                    <p>Reduce tareas manuales en un 80% con procesos automatizados y workflows inteligentes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Instituciones</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">2M+</div>
+                            <div class="stat-label">Estudiantes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">99.9%</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Soporte</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section id="modulos" class="modules-section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Módulos del Sistema</h2>
+                <p class="section-subtitle">Descubre todos los módulos integrados que conforman SIGAI</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="bi bi-person-workspace"></i>
+                        </div>
+                        <h4>Gestión de Estudiantes</h4>
+                        <p>Control completo del ciclo de vida estudiantil desde el ingreso hasta la graduación.</p>
+                        <ul class="module-features">
+                            <li><i class="bi bi-check-circle"></i> Inscripciones automatizadas</li>
+                            <li><i class="bi bi-check-circle"></i> Historiales académicos</li>
+                            <li><i class="bi bi-check-circle"></i> Seguimiento de progreso</li>
+                            <li><i class="bi bi-check-circle"></i> Alertas tempranas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="bi bi-journal-bookmark"></i>
+                        </div>
+                        <h4>Planificación Académica</h4>
+                        <p>Organiza y gestiona toda la oferta académica de tu institución.</p>
+                        <ul class="module-features">
+                            <li><i class="bi bi-check-circle"></i> Diseño curricular</li>
+                            <li><i class="bi bi-check-circle"></i> Programación de cursos</li>
+                            <li><i class="bi bi-check-circle"></i> Asignación de aulas</li>
+                            <li><i class="bi bi-check-circle"></i> Gestión de horarios</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="bi bi-currency-dollar"></i>
+                        </div>
+                        <h4>Gestión Financiera</h4>
+                        <p>Controla todos los aspectos económicos de tu institución.</p>
+                        <ul class="module-features">
+                            <li><i class="bi bi-check-circle"></i> Matrículas y pensiones</li>
+                            <li><i class="bi bi-check-circle"></i> Pagos en línea</li>
+                            <li><i class="bi bi-check-circle"></i> Reportes contables</li>
+                            <li><i class="bi bi-check-circle"></i> Becas y descuentos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <h4>Gestión Docente</h4>
+                        <p>Administra toda la información y actividades del cuerpo docente.</p>
+                        <ul class="module-features">
+                            <li><i class="bi bi-check-circle"></i> Asignación de cursos</li>
+                            <li><i class="bi bi-check-circle"></i> Evaluaciones</li>
+                            <li><i class="bi bi-check-circle"></i> Horarios</li>
+                            <li><i class="bi bi-check-circle"></i> Capacitaciones</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                        <h4>Reportes y Analytics</h4>
+                        <p>Genera reportes detallados y análisis de datos institucionales.</p>
+                        <ul class="module-features">
+                            <li><i class="bi bi-check-circle"></i> Dashboard interactivo</li>
+                            <li><i class="bi bi-check-circle"></i> Indicadores clave</li>
+                            <li><i class="bi bi-check-circle"></i> Exportación a múltiples formatos</li>
+                            <li><i class="bi bi-check-circle"></i> Alertas personalizadas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="bi bi-laptop"></i>
+                        </div>
+                        <h4>Aula Virtual</h4>
+                        <p>Plataforma integrada de aprendizaje en línea.</p>
+                        <ul class="module-features">
+                            <li><i class="bi bi-check-circle"></i> Contenidos multimedia</li>
+                            <li><i class="bi bi-check-circle"></i> Foros y discusiones</li>
+                            <li><i class="bi bi-check-circle"></i> Evaluaciones en línea</li>
+                            <li><i class="bi bi-check-circle"></i> Seguimiento de progreso</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="funcionalidades" class="features-section py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Funcionalidades Principales</h2>
+                <p class="section-subtitle">Descubre las poderosas herramientas que ofrece SIGAI para tu institución</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                        </div>
+                        <h4>Plataforma en la Nube</h4>
+                        <p>Acceso seguro desde cualquier lugar y dispositivo, con toda la información respaldada y actualizada en tiempo real.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <h4>Seguridad Avanzada</h4>
+                        <p>Protección de datos con encriptación, autenticación multifactor y controles de acceso granular.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-phone"></i>
+                        </div>
+                        <h4>App Móvil</h4>
+                        <p>Aplicación nativa para estudiantes y docentes con notificaciones push y acceso rápido a información clave.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h4>Portal del Estudiante</h4>
+                        <p>Área personalizada donde los estudiantes pueden ver calificaciones, horarios, pagos y más.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-person-video3"></i>
+                        </div>
+                        <h4>Portal del Docente</h4>
+                        <p>Herramientas especializadas para que los docentes gestionen sus cursos, calificaciones y asistencia.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-puzzle"></i>
+                        </div>
+                        <h4>Integraciones</h4>
+                        <p>Conexión con sistemas externos como SIU, Moodle, Microsoft 365, Google Workspace y más.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-5">
+                    <h2 class="section-title">Contáctanos</h2>
+                    <p class="section-subtitle">¿Listo para transformar la gestión académica de tu institución? Déjanos tus datos y nos pondremos en contacto contigo.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+                                        <label for="nombre">Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="apellido" placeholder="Apellido" required>
+                                        <label for="apellido">Apellido</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                                        <label for="email">Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="telefono" placeholder="Teléfono">
+                                        <label for="telefono">Teléfono</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="institucion" placeholder="Institución" required>
+                                        <label for="institucion">Institución</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Mensaje" id="mensaje" style="height: 120px"></textarea>
+                                        <label for="mensaje">Mensaje</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Enviar Mensaje</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-info-container">
+                        <div class="contact-info">
+                            <div class="contact-icon">
+                                <i class="bi bi-geo-alt"></i>
+                            </div>
+                            <h5>Oficina Principal</h5>
+                            <p>Av. Universidad 123, La Pampa, Argentina</p>
+                        </div>
+
+                        <div class="contact-info mt-4">
+                            <div class="contact-icon">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <h5>Teléfono</h5>
+                            <p>+54 9 2345678</p>
+                        </div>
+
+                        <div class="contact-info mt-4">
+                            <div class="contact-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <h5>Email</h5>
+                            <p>contacto@sigai.edu</p>
+                        </div>
+
+                        <div class="contact-info mt-4">
+                            <div class="contact-icon">
+                                <i class="bi bi-clock"></i>
+                            </div>
+                            <h5>Horario de Atención</h5>
+                            <p>Lunes a Viernes: 9:00 - 18:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="logo-container mb-3">
+                        <i class="bi bi-mortarboard-fill text-white fs-2"></i>
+                        <span class="logo-text text-white">SIGAI</span>
+                    </div>
+                    <p>Sistema Integral de Gestión Académica e Institucional para universidades modernas.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-youtube fs-4"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#inicio" class="text-white-50">Inicio</a></li>
+                        <li class="mb-2"><a href="#acerca" class="text-white-50">Acerca de SIGAI</a></li>
+                        <li class="mb-2"><a href="#modulos" class="text-white-50">Módulos</a></li>
+                        <li class="mb-2"><a href="#funcionalidades" class="text-white-50">Funcionalidades</a></li>
+                        <li class="mb-2"><a href="#contacto" class="text-white-50">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Módulos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50">Gestión de Estudiantes</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Planificación Académica</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Gestión Financiera</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Aula Virtual</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Reportes y Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5>Suscríbete</h5>
+                    <p>Recibe las últimas actualizaciones y noticias sobre SIGAI.</p>
+                    <form class="mt-3">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Tu email" aria-label="Tu email">
+                            <button class="btn btn-primary" type="button">Suscribir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 SIGAI. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white-50 me-3">Términos de Servicio</a>
+                        <a href="#" class="text-white-50">Política de Privacidad</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- Demo Modal -->
+    <div class="modal fade" id="demoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Solicitar Demo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="demoForm">
+                        <div class="mb-3">
+                            <label for="demoName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="demoName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="demoEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="demoEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="demoInstitution" class="form-label">Institución</label>
+                            <input type="text" class="form-control" id="demoInstitution" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="demoPosition" class="form-label">Cargo</label>
+                            <input type="text" class="form-control" id="demoPosition" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="demoMessage" class="form-label">Mensaje (Opcional)</label>
+                            <textarea class="form-control" id="demoMessage" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Solicitar Demo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/publico.js"></script>
+</body>
+</html>
