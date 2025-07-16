@@ -5,7 +5,7 @@
 namespace SIGAI.Migrations
 {
     /// <inheritdoc />
-    public partial class migracionini : Migration
+    public partial class confCalendar3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
