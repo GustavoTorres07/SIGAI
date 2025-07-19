@@ -21,7 +21,6 @@ namespace SIGAI.Data
 
             // Crear roles predeterminados
             string[] roles = { "SuperAdmin", "Docente", "Estudiante", "SecretarioInstitucion" };
-
             foreach (var roleName in roles)
             {
                 if (!await roleManager.RoleExistsAsync(roleName))
@@ -35,12 +34,11 @@ namespace SIGAI.Data
             }
 
             // Crear usuario SuperAdmin si no existe
-            string dniSuperAdmin = "39054025";
-            string emailSuperAdmin = "superadmin@sigai.com";
-            string passwordSuperAdmin = "Admin123";
+            const string dniSuperAdmin = "39054025";
+            const string emailSuperAdmin = "superadmin@sigai.com";
+            const string passwordSuperAdmin = "Admin123";
 
             var superAdmin = await userManager.FindByNameAsync(dniSuperAdmin);
-
             if (superAdmin == null)
             {
                 superAdmin = new Usuario
@@ -61,7 +59,6 @@ namespace SIGAI.Data
                 };
 
                 var createResult = await userManager.CreateAsync(superAdmin, passwordSuperAdmin);
-
                 if (!createResult.Succeeded)
                 {
                     var errors = string.Join("\n", createResult.Errors.Select(e => e.Description));
@@ -69,7 +66,6 @@ namespace SIGAI.Data
                 }
 
                 var roleResult = await userManager.AddToRoleAsync(superAdmin, "SuperAdmin");
-
                 if (!roleResult.Succeeded)
                 {
                     var errors = string.Join("\n", roleResult.Errors.Select(e => e.Description));

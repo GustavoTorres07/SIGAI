@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SIGAI.Data;
 
@@ -11,9 +12,11 @@ using SIGAI.Data;
 namespace SIGAI.Migrations
 {
     [DbContext(typeof(SIGAIDbContext))]
-    partial class SIGAIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250718023635_backup")]
+    partial class backup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,6 +164,85 @@ namespace SIGAI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Auditorias");
+                });
+
+            modelBuilder.Entity("SIGAI.Models.Entidades.CategoriaCalendarioEvento", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ColorHex")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoriasCalendario");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            ColorHex = "#1976d2",
+                            Nombre = "Académico"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            ColorHex = "#7b1fa2",
+                            Nombre = "Administrativo"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            ColorHex = "#388e3c",
+                            Nombre = "Evento"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            ColorHex = "#f57c00",
+                            Nombre = "Feriado"
+                        });
+                });
+
+            modelBuilder.Entity("SIGAI.Models.Entidades.EventoCalendario", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CategoriaId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreadoPor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("FechaFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
+
+                    b.ToTable("EventosCalendario");
                 });
 
             modelBuilder.Entity("SIGAI.Models.Entidades.Rol", b =>
@@ -345,6 +427,17 @@ namespace SIGAI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SIGAI.Models.Entidades.EventoCalendario", b =>
+                {
+                    b.HasOne("SIGAI.Models.Entidades.CategoriaCalendarioEvento", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
                 });
 #pragma warning restore 612, 618
         }

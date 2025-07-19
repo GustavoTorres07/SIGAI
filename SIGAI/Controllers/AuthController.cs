@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using SIGAI.Configuracion;
 using SIGAI.Models.Entidades;
 using SIGAI.Models.ViewModels;
 using SIGAI.Services.Interfaces;
@@ -10,18 +12,22 @@ namespace SIGAI.Controllers
 {
     public class AuthController : Controller
     {
+
         private readonly SignInManager<Usuario> _signInManager;
         private readonly UserManager<Usuario> _userManager;
         private readonly IAuditoriaServicio _auditoriaServicio;
+        private readonly IOptions<DashboardOptions> _dashboardOptions; // CAMBIADO
 
         public AuthController(
             SignInManager<Usuario> signInManager,
             UserManager<Usuario> userManager,
-            IAuditoriaServicio auditoriaServicio)
+            IAuditoriaServicio auditoriaServicio,
+            IOptions<DashboardOptions> dashboardOptions)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _auditoriaServicio = auditoriaServicio;
+            _dashboardOptions = dashboardOptions; // CAMBIADO
         }
 
         [HttpGet]
@@ -95,7 +101,7 @@ namespace SIGAI.Controllers
                 User);
 
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Auth"); // Redirige al login
+            return RedirectToAction("Login", "Auth");
         }
 
         [HttpGet]
@@ -113,24 +119,23 @@ namespace SIGAI.Controllers
         public async Task<IActionResult> RedireccionarDashboard()
         {
             var usuario = await _userManager.GetUserAsync(User);
-            if (usuario == null) return RedirectToAction("Login");
+            if (usuario == null)
+                return RedirectToAction("Login");
 
             var roles = await _userManager.GetRolesAsync(usuario);
 
-            if (roles.Contains("SuperAdmin"))
-                return RedirectToAction("Index", "DashboardSuperAdmin");
+            var ruta = _dashboardOptions.Value.Rutas
+                .FirstOrDefault(r => roles.Contains(r.Rol));
 
-            if (roles.Contains("SecretarioInstitucion"))
-                return RedirectToAction("Index", "DashboardSecretario");
+            if (ruta != null)
+            {
+                return RedirectToAction(ruta.Accion, ruta.Controlador,
+                    ruta.Area != null ? new { area = ruta.Area } : null);
+            }
 
-            if (roles.Contains("Docente"))
-                return RedirectToAction("Index", "DashboardDocente");
-
-            if (roles.Contains("Estudiante"))
-                return RedirectToAction("Index", "DashboardEstudiante");
-
-            // Rol genérico
+            // Si el rol no tiene dashboard configurado
             return RedirectToAction("Index", "DashboardGenerico");
         }
+
     }
 }

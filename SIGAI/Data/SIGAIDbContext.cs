@@ -17,8 +17,6 @@ namespace SIGAI.Data
         public DbSet<Auditoria> Auditorias { get; set; }
 
         // Entidades del calendario
-        public DbSet<CategoriaCalendarioEvento> CategoriasCalendario { get; set; }
-        public DbSet<EventoCalendario> EventosCalendario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,33 +24,7 @@ namespace SIGAI.Data
 
             // Aquí puedes agregar configuraciones adicionales si es necesario
 
-            // Seed inicial de categorías del calendario
-            modelBuilder.Entity<CategoriaCalendarioEvento>().HasData(
-                new CategoriaCalendarioEvento
-                {
-                    Id = "1",
-                    Nombre = "Académico",
-                    ColorHex = "#1976d2"
-                },
-                new CategoriaCalendarioEvento
-                {
-                    Id = "2",
-                    Nombre = "Administrativo",
-                    ColorHex = "#7b1fa2"
-                },
-                new CategoriaCalendarioEvento
-                {
-                    Id = "3",
-                    Nombre = "Evento",
-                    ColorHex = "#388e3c"
-                },
-                new CategoriaCalendarioEvento
-                {
-                    Id = "4",
-                    Nombre = "Feriado",
-                    ColorHex = "#f57c00"
-                }
-            );
+  
         }
     }
 }

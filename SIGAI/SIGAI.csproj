@@ -8,6 +8,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="Helpers\**" />
+    <Compile Remove="Models\DTOs\**" />
+    <Compile Remove="Repositories\**" />
+    <Compile Remove="ViewComponents\**" />
+    <Content Remove="Data\Migrations\**" />
+    <Content Remove="Helpers\**" />
+    <Content Remove="Models\DTOs\**" />
+    <Content Remove="Repositories\**" />
+    <Content Remove="ViewComponents\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <EmbeddedResource Remove="Models\DTOs\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <EmbeddedResource Remove="ViewComponents\**" />
+    <None Remove="Data\Migrations\**" />
+    <None Remove="Helpers\**" />
+    <None Remove="Models\DTOs\**" />
+    <None Remove="Repositories\**" />
+    <None Remove="ViewComponents\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.17" />
@@ -23,12 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Models\DTOs\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="ViewComponents\" />
   </ItemGroup>
 
 </Project>
