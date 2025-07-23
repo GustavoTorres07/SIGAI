@@ -23,14 +23,32 @@ namespace SIGAI.Services
         {
             var identity = await base.GenerateClaimsAsync(user);
 
-            if (!string.IsNullOrEmpty(user.DNI))
+            if (!string.IsNullOrEmpty(user.DNI) && !identity.HasClaim(c => c.Type == "DNI"))
+            {
                 identity.AddClaim(new Claim("DNI", user.DNI));
+            }
 
-            // Obtener roles y agregarlos como claims
+            // Agregar nombre completo como claim
+            var nombreCompleto = $"{user.Nombre} {user.Apellido}";
+            if (!string.IsNullOrEmpty(nombreCompleto) && !identity.HasClaim(c => c.Type == "FullName"))
+            {
+                identity.AddClaim(new Claim("FullName", nombreCompleto));
+            }
+
+            // Agregar foto de perfil como claim si existe
+            if (!string.IsNullOrEmpty(user.FotoPerfil) && !identity.HasClaim(c => c.Type == "FotoPerfil"))
+            {
+                identity.AddClaim(new Claim("FotoPerfil", user.FotoPerfil));
+            }
+
+            // Agregar roles evitando duplicados
             var roles = await _userManager.GetRolesAsync(user);
             foreach (var rol in roles)
             {
-                identity.AddClaim(new Claim(ClaimTypes.Role, rol));
+                if (!identity.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == rol))
+                {
+                    identity.AddClaim(new Claim(ClaimTypes.Role, rol));
+                }
             }
 
             return identity;

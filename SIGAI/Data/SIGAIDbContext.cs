@@ -11,20 +11,26 @@ namespace SIGAI.Data
         {
         }
 
-        // Entidades del sistema
-        public DbSet<Usuario> Usuarios { get; set; }
-        public new DbSet<Rol> Roles { get; set; }
-        public DbSet<Auditoria> Auditorias { get; set; }
+        // DbSets para tus entidades
+        public new DbSet<Usuario> Usuarios { get; set; } = null!;
+        public new DbSet<Rol> Roles { get; set; } = null!;
+        public DbSet<Auditoria> Auditorias { get; set; } = null!;
+        public DbSet<Carrera> Carreras { get; set; } = null!;
+        public DbSet<Ticket> Tickets { get; set; } = null!;
+        public DbSet<Reporte> Reportes { get; set; } = null!;
+        public DbSet<Notificacion> Notificaciones { get; set; } = null!;
 
-        // Entidades del calendario
+
+
+
+        // Puedes agregar más DbSets para otras entidades aquí
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Aquí puedes agregar configuraciones adicionales si es necesario
-
-  
+            // Aquí puedes agregar configuraciones adicionales si necesitas
+            // Ejemplo: modelBuilder.Entity<Usuario>().HasIndex(u => u.DNI).IsUnique();
         }
     }
 }

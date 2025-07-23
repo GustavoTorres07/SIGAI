@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace SIGAI.Migrations
 {
     /// <inheritdoc />
-    public partial class migracionInicial : Migration
+    public partial class MigracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,19 +78,6 @@ namespace SIGAI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Auditorias", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CategoriasCalendario",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ColorHex = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoriasCalendario", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,40 +186,6 @@ namespace SIGAI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "EventosCalendario",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoriaId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreadoPor = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventosCalendario", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EventosCalendario_CategoriasCalendario_CategoriaId",
-                        column: x => x.CategoriaId,
-                        principalTable: "CategoriasCalendario",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "CategoriasCalendario",
-                columns: new[] { "Id", "ColorHex", "Nombre" },
-                values: new object[,]
-                {
-                    { "1", "#1976d2", "Académico" },
-                    { "2", "#7b1fa2", "Administrativo" },
-                    { "3", "#388e3c", "Evento" },
-                    { "4", "#f57c00", "Feriado" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -273,11 +224,6 @@ namespace SIGAI.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventosCalendario_CategoriaId",
-                table: "EventosCalendario",
-                column: "CategoriaId");
         }
 
         /// <inheritdoc />
@@ -302,16 +248,10 @@ namespace SIGAI.Migrations
                 name: "Auditorias");
 
             migrationBuilder.DropTable(
-                name: "EventosCalendario");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "CategoriasCalendario");
         }
     }
 }

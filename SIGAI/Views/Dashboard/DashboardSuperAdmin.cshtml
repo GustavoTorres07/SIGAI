@@ -1,39 +1,251 @@
 ﻿@{
-    ViewData["Title"] = "Dashboard SuperAdmin";
+    ViewData["Title"] = "Panel de Administración";
+    var nombreUsuario = User.Identity?.Name ?? "SuperAdmin";
 }
 
-<div class="container py-4">
-    <h2 class="fw-bold mb-3 text-primary">
-        <i class="bi bi-speedometer2 me-2"></i> Bienvenido al Panel de SuperAdmin
-    </h2>
+@section Styles {
+    <link href="~/css/dashboard.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+}
 
-    <div class="row g-4">
-        <div class="col-md-6 col-xl-3">
-            <div class="card border-0 shadow-sm rounded-4 h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h6 class="text-muted">Usuarios</h6>
-                            <h4 class="fw-bold">120</h4>
-                        </div>
-                        <i class="bi bi-people-fill fs-2 text-primary"></i>
-                    </div>
+<div class="main-container">
+    <!-- Header Section -->
+    <div class="header-section">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="welcome-text mb-0">
+                    <i class="bi bi-person-gear me-3"></i>Bienvenido, @nombreUsuario
+                </h1>
+                <p class="subtitle-text mb-0">Panel principal de administración</p>
+            </div>
+            <div class="d-flex align-items-center gap-4">
+                <div class="position-relative">
+                    <i class="bi bi-bell fs-3"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill notification-badge">3</span>
                 </div>
+                <img src="~/images/perfil-default.png"
+                     class="rounded-circle profile-img"
+                     alt="Foto perfil"
+                     width="50"
+                     height="50"
+                     onerror="this.src='https://via.placeholder.com/50x50/007bff/ffffff?text=@(nombreUsuario.Substring(0, 1))'">
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access Cards -->
+    <div class="stats-grid">
+        <!-- Usuarios Card -->
+        <div class="dashboard-card" tabindex="0">
+            <div class="dashboard-card-body">
+                <i class="bi bi-people-fill dashboard-icon text-primary"></i>
+                <h6 class="dashboard-title">Usuarios</h6>
+                <p class="dashboard-description">Gestionar usuarios del sistema y sus permisos</p>
+                <button class="btn dashboard-button" data-navigate="usuarios">
+                    Gestionar <i class="bi bi-arrow-right ms-2"></i>
+                </button>
             </div>
         </div>
 
-        <div class="col-md-6 col-xl-3">
-            <div class="card border-0 shadow-sm rounded-4 h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h6 class="text-muted">Carreras</h6>
-                            <h4 class="fw-bold">8</h4>
-                        </div>
-                        <i class="bi bi-mortarboard fs-2 text-success"></i>
-                    </div>
+        <!-- Carreras Card -->
+        <div class="dashboard-card" tabindex="0">
+            <div class="dashboard-card-body">
+                <i class="bi bi-mortarboard dashboard-icon text-success"></i>
+                <h6 class="dashboard-title">Carreras</h6>
+                <p class="dashboard-description">Ver y administrar programas académicos</p>
+                <button class="btn dashboard-button btn-success-gradient" data-navigate="carreras">
+                    Administrar <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tickets Card -->
+        <div class="dashboard-card" tabindex="0">
+            <div class="dashboard-card-body">
+                <i class="bi bi-ticket-detailed dashboard-icon text-warning"></i>
+                <h6 class="dashboard-title">Tickets</h6>
+                <p class="dashboard-description">Soporte técnico y atención al usuario</p>
+                <button class="btn dashboard-button btn-warning-gradient" data-navigate="tickets">
+                    Ver Tickets <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Reportes Card -->
+        <div class="dashboard-card" tabindex="0">
+            <div class="dashboard-card-body">
+                <i class="bi bi-graph-up dashboard-icon text-info"></i>
+                <h6 class="dashboard-title">Reportes</h6>
+                <p class="dashboard-description">Análisis y estadísticas del sistema</p>
+                <button class="btn dashboard-button btn-info-gradient" data-navigate="reportes">
+                    Ver Reportes <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Configuración Card -->
+        <div class="dashboard-card" tabindex="0">
+            <div class="dashboard-card-body">
+                <i class="bi bi-gear dashboard-icon text-secondary"></i>
+                <h6 class="dashboard-title">Configuración</h6>
+                <p class="dashboard-description">Ajustes generales del sistema</p>
+                <button class="btn dashboard-button btn-secondary-gradient" data-navigate="configuracion">
+                    Configurar <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Seguridad Card -->
+        <div class="dashboard-card" tabindex="0">
+            <div class="dashboard-card-body">
+                <i class="bi bi-shield-check dashboard-icon text-danger"></i>
+                <h6 class="dashboard-title">Seguridad</h6>
+                <p class="dashboard-description">Logs y auditoría del sistema</p>
+                <button class="btn dashboard-button btn-danger-gradient" data-navigate="seguridad">
+                    Auditoría <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section (Optional - can be populated dynamically) -->
+    <div class="row mb-4 d-none" id="statsSection">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="text-primary" data-stat="users">0</h3>
+                    <p class="text-muted mb-0">Total Usuarios</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="text-warning" data-stat="tickets">0</h3>
+                    <p class="text-muted mb-0">Tickets Activos</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="text-success" data-stat="courses">0</h3>
+                    <p class="text-muted mb-0">Total Carreras</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="text-info" data-stat="health">0</h3>
+                    <p class="text-muted mb-0">Salud del Sistema</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Calendar Section -->
+    <div class="calendar-card">
+        <div class="calendar-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-calendar-event me-3"></i>Eventos y Calendario
+                </h5>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-light btn-sm" onclick="dashboard.exportData('json')" title="Exportar datos">
+                        <i class="bi bi-download"></i>
+                    </button>
+                    <button class="btn btn-light btn-sm" onclick="dashboard.showQuickSearch()" title="Búsqueda rápida (Ctrl+K)">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="p-3">
+            <div id="calendar" class="calendar-container"></div>
+        </div>
+    </div>
 </div>
+
+<!-- Shortcuts Help (Hidden by default) -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1000;">
+    <button class="btn btn-primary btn-sm rounded-circle" id="helpButton" title="Atajos de teclado">
+        <i class="bi bi-question-lg"></i>
+    </button>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="~/js/dashboard.js"></script>
+
+    <script>
+        /
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('helpButton').addEventListener('click', function() {
+                dashboard.showModal('Atajos de Teclado', `
+                    <div class="shortcuts-help">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-primary">Navegación</h6>
+                                <ul class="list-unstyled">
+                                    <li><kbd>Ctrl+K</kbd> - Búsqueda rápida</li>
+                                    <li><kbd>Alt+N</kbd> - Notificaciones</li>
+                                    <li><kbd>Alt+P</kbd> - Perfil de usuario</li>
+                                    <li><kbd>Esc</kbd> - Cerrar modales</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-primary">Acciones</h6>
+                                <ul class="list-unstyled">
+                                    <li><kbd>Tab</kbd> - Navegar entre cards</li>
+                                    <li><kbd>Enter</kbd> - Activar card seleccionada</li>
+                                    <li><kbd>Space</kbd> - Activar botón</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Estos atajos te ayudan a navegar más rápidamente por el dashboard.
+                            </small>
+                        </div>
+                    </div>
+                `);
+            });
+        });
+        window.navigateToSection = function(controller, action) {
+            window.location.href = '@Url.Action("", "")'.replace(/\/\//g, '/') + controller + '/' + action;
+        };
+        window.navigateTo = function(section) {
+            const routes = {
+                'usuarios': '@Url.Action("Index", "Usuarios")',
+                'carreras': '@Url.Action("Index", "Carreras")',
+                'tickets': '@Url.Action("Index", "Tickets")',
+                'reportes': '@Url.Action("Index", "Reportes")',
+                'configuracion': '@Url.Action("Index", "Configuracion")',
+                'seguridad': '@Url.Action("Index", "Seguridad")'
+            };
+
+            const button = event.target.closest('button');
+            const originalHTML = button.innerHTML;
+
+            button.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Cargando...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                if (routes[section]) {
+                    window.location.href = routes[section];
+                } else {
+                    // Fallback para secciones no definidas
+                    console.warn(`Ruta no encontrada para: ${section}`);
+                    button.innerHTML = originalHTML;
+                    button.disabled = false;
+
+                    if (window.dashboard) {
+                        dashboard.showError('Error de Navegación', `La sección "${section}" no está disponible.`);
+                    }
+                }
+            }, 500);
+        };
+    </script>
+}

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SIGAI.Models;
 using SIGAI.Models.Entidades;
+using SIGAI.Services.Interfaces;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -12,51 +13,48 @@ namespace SIGAI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<Usuario> _userManager;
+        private readonly IRolRedireccionServicio _rolRedireccionServicio;
 
         public HomeController(
             ILogger<HomeController> logger,
-            UserManager<Usuario> userManager)
+            UserManager<Usuario> userManager,
+            IRolRedireccionServicio rolRedireccionServicio)
         {
             _logger = logger;
             _userManager = userManager;
+            _rolRedireccionServicio = rolRedireccionServicio;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Error() =>
+            View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
-        [Authorize]  // Asegura que solo usuarios autenticados puedan acceder
+        [Authorize]
         public async Task<IActionResult> RedireccionDashboard()
         {
             var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
+                _logger.LogWarning("Intento de acceso sin usuario autenticado a RedireccionDashboard.");
                 return RedirectToAction("Index", "Home");
             }
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            if (roles.Contains("SuperAdmin"))
-                return RedirectToAction("Dashboard", "SuperAdmin");  // Ajustado a tu estructura
+            if (roles == null || roles.Count == 0)
+            {
+                _logger.LogWarning("Usuario {UserId} no tiene roles asignados.", user.Id);
+                return RedirectToAction("Index", "Home");
+            }
 
-            if (roles.Contains("SecretarioInstitucion"))
-                return RedirectToAction("Index", "DashboardSecretario");
+            // Usar el nombre correcto del servicio inyectado
+            var url = _rolRedireccionServicio.ObtenerRutaRedireccion(roles[0]);
 
-            if (roles.Contains("Docente"))
-                return RedirectToAction("Index", "DashboardDocente");
-
-            if (roles.Contains("Estudiante"))
-                return RedirectToAction("Index", "DashboardEstudiante");
-
-            return RedirectToAction("Index", "DashboardGenerico");
+            return Redirect(url);
         }
+
     }
 }

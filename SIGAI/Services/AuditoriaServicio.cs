@@ -3,6 +3,7 @@ using SIGAI.Data;
 using SIGAI.Models.Entidades;
 using SIGAI.Services.Interfaces;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
 public class AuditoriaServicio : IAuditoriaServicio
@@ -29,7 +30,7 @@ public class AuditoriaServicio : IAuditoriaServicio
 
             if (esAutenticado)
             {
-                usuarioId = usuario.FindFirstValue(ClaimTypes.NameIdentifier); // Aquí ya es string GUID, no parsear a int
+                usuarioId = usuario.FindFirstValue(ClaimTypes.NameIdentifier);
                 dniUsuario = usuario.FindFirstValue("DNI") ?? "DNI no definido";
                 nombreUsuario = usuario.FindFirstValue(ClaimTypes.Name) ?? "Nombre no definido";
                 rolUsuario = usuario.FindFirstValue(ClaimTypes.Role) ?? "Rol no definido";
@@ -50,7 +51,33 @@ public class AuditoriaServicio : IAuditoriaServicio
         }
         catch (Exception ex)
         {
-            _logger?.LogError(ex, "Error al registrar auditoría.");
+            _logger?.LogError(ex, "Error al registrar auditoría (usuario autenticado).");
+        }
+    }
+
+    public async Task RegistrarAccionAnonimaAsync(string accion, HttpContext context)
+    {
+        try
+        {
+            var ip = context.Connection?.RemoteIpAddress?.ToString() ?? "IP desconocida";
+            var userAgent = context.Request?.Headers["User-Agent"].ToString() ?? "Navegador desconocido";
+
+            var auditoria = new Auditoria
+            {
+                FechaHora = DateTime.Now,
+                Accion = $"{accion} | IP: {ip} | Navegador: {userAgent}",
+                UsuarioId = null,
+                DNI = "No autenticado",
+                NombreUsuario = "No autenticado",
+                Rol = "No autenticado"
+            };
+
+            _context.Auditorias.Add(auditoria);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger?.LogError(ex, "Error al registrar auditoría anónima.");
         }
     }
 }

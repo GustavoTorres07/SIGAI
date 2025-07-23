@@ -12,11 +12,10 @@ namespace SIGAI.Controllers
 {
     public class AuthController : Controller
     {
-
         private readonly SignInManager<Usuario> _signInManager;
         private readonly UserManager<Usuario> _userManager;
         private readonly IAuditoriaServicio _auditoriaServicio;
-        private readonly IOptions<DashboardOptions> _dashboardOptions; // CAMBIADO
+        private readonly IOptions<DashboardOptions> _dashboardOptions;
 
         public AuthController(
             SignInManager<Usuario> signInManager,
@@ -27,7 +26,7 @@ namespace SIGAI.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
             _auditoriaServicio = auditoriaServicio;
-            _dashboardOptions = dashboardOptions; // CAMBIADO
+            _dashboardOptions = dashboardOptions;
         }
 
         [HttpGet]
@@ -36,8 +35,9 @@ namespace SIGAI.Controllers
             if (User.Identity?.IsAuthenticated == true)
                 return RedirectToAction("RedireccionarDashboard", "Auth");
 
-            return View();
+            return View(new LoginViewModel());  // Siempre enviar modelo no nulo
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -52,7 +52,9 @@ namespace SIGAI.Controllers
                 await _auditoriaServicio.RegistrarAccionAsync(
                     $"Intento de login fallido para DNI {model.DNI} - Usuario no encontrado o inactivo",
                     User);
-                ModelState.AddModelError(string.Empty, "Credenciales incorrectas.");
+
+                TempData["LoginError"] = true;
+                ModelState.Clear();
                 return View(model);
             }
 
@@ -76,6 +78,7 @@ namespace SIGAI.Controllers
                 await _auditoriaServicio.RegistrarAccionAsync(
                     $"Cuenta bloqueada temporalmente para usuario {user.NombreCompleto} (DNI: {user.DNI})",
                     User);
+
                 ModelState.AddModelError(string.Empty, "Cuenta bloqueada temporalmente.");
                 return View(model);
             }
@@ -84,9 +87,11 @@ namespace SIGAI.Controllers
                 $"Intento de login fallido para usuario {user.NombreCompleto} (DNI: {user.DNI}) - Contraseña incorrecta",
                 User);
 
-            ModelState.AddModelError(string.Empty, "Credenciales incorrectas.");
+            TempData["LoginError"] = true;
+            ModelState.Clear();
             return View(model);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -133,9 +138,7 @@ namespace SIGAI.Controllers
                     ruta.Area != null ? new { area = ruta.Area } : null);
             }
 
-            // Si el rol no tiene dashboard configurado
             return RedirectToAction("Index", "DashboardGenerico");
         }
-
     }
 }
